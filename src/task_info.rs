@@ -20,6 +20,7 @@ pub type integer_t = libc::c_int;
 pub type natural_t = libc::c_uint;
 
 #[repr(C)]
+#[derive(Copy, Clone, Debug)]
 pub struct time_value { seconds: integer_t, microseconds: integer_t, }
 pub type time_value_t = time_value;
 pub type policy_t = libc::c_int;
@@ -28,6 +29,7 @@ pub type policy_t = libc::c_int;
 /// (This is mainly put here for completeness.)
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskBasicInfo32 {
     /// suspend count for task
     pub suspend_count: integer_t,
@@ -47,6 +49,7 @@ pub struct TaskBasicInfo32 {
 /// (This is mainly put here for completeness.)
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskBasicInfo64 {
     /// suspend count for task
     pub suspend_count: integer_t,
@@ -64,6 +67,7 @@ pub struct TaskBasicInfo64 {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskEventsInfo {
     /// number of page faults
     pub faults: integer_t,
@@ -85,6 +89,7 @@ pub struct TaskEventsInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskThreadTimesInfo {
     /// total user run time for live threads
     pub user_time: time_value_t,
@@ -94,6 +99,7 @@ pub struct TaskThreadTimesInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskAbsolutetimeInfo {
     pub total_user: uint64_t,
     pub total_system: uint64_t,
@@ -104,6 +110,7 @@ pub struct TaskAbsolutetimeInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskKernelmemoryInfo {
     /// private kernel mem alloc'ed
     pub total_palloc: uint64_t,
@@ -117,6 +124,7 @@ pub struct TaskKernelmemoryInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskAffinityTagInfo {
     pub set_count: integer_t,
     pub min: integer_t,
@@ -126,6 +134,7 @@ pub struct TaskAffinityTagInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskDyldInfo {
     pub all_image_info_addr: mach_vm_address_t,
     pub all_image_info_size: mach_vm_size_t,
@@ -140,6 +149,7 @@ pub struct TaskDyldInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct MachTaskBasicInfo {
     /// virtual memory size (bytes)
     pub virtual_size: mach_vm_size_t,
@@ -159,6 +169,7 @@ pub struct MachTaskBasicInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskPowerInfo {
     pub total_user: uint64_t,
     pub total_system: uint64_t,
@@ -170,6 +181,7 @@ pub struct TaskPowerInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskVmInfo {
     /// virtual memory size (bytes)
     pub virtual_size: mach_vm_size_t,
@@ -202,12 +214,12 @@ pub struct TaskVmInfo {
 
 #[repr(C)]
 #[repr(packed)]
-pub struct TaskVmInfoPurgeable {
-    pub info: TaskVmInfo,
-}
+#[derive(Copy, Clone, Debug)]
+pub struct TaskVmInfoPurgeable(TaskVmInfo);
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskTraceMemoryInfo {
     /// address of start of trace memory buffer
     pub user_memory_address: uint64_t,
@@ -219,6 +231,7 @@ pub struct TaskTraceMemoryInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskWaitStateInfo {
     /// Time that all threads past and present have been in a wait state
     pub total_wait_state_time: uint64_t,
@@ -229,6 +242,7 @@ pub struct TaskWaitStateInfo {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct GpuEnergyData {
     pub task_gpu_utilisation: uint64_t,
     pub task_gpu_stat_reserved0: uint64_t,
@@ -238,6 +252,7 @@ pub struct GpuEnergyData {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskPowerInfoV2 {
     pub cpu_energy: TaskPowerInfo,
     pub gpu_energy: GpuEnergyData,
@@ -245,6 +260,7 @@ pub struct TaskPowerInfoV2 {
 
 #[repr(C)]
 #[repr(packed)]
+#[derive(Copy, Clone, Debug)]
 pub struct TaskFlagsInfo {
     /// task flags
     pub flags: uint32_t,
