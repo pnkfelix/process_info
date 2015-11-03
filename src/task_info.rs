@@ -486,6 +486,14 @@ macro_rules! for_each_flavor {
     }
 }
 
+macro_rules! new_impl {
+    ($id:ident) => {
+        impl $id { fn new() -> Self { <Self as Flavor>::new() } }
+    }
+}
+
+for_each_flavor!(new_impl);
+
 #[test]
 fn check_flavor_values() {
     macro_rules! check { ($id:ident) => { check_value::<$id>(); } }
