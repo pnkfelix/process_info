@@ -35,6 +35,10 @@ int task_info_self_init(int flavor, task_info_t info) {
         ARM(MACH_TASK_BASIC_INFO);
         ARM(TASK_POWER_INFO);
         ARM(TASK_VM_INFO);
+
+        // ARM(TASK_VM_INFO_PURGEABLE);
+    case TASK_VM_INFO_PURGEABLE: t_info_count = TASK_VM_INFO_COUNT; break;
+
         // ARM(TASK_VM_INFO_REV0);
         ARM(TASK_TRACE_MEMORY_INFO);
         ARM(TASK_WAIT_STATE_INFO);
@@ -76,6 +80,7 @@ size_t task_info_sizeof_struct_for_flavor(int flavor) {
         ARM(MACH_TASK_BASIC_INFO,   struct mach_task_basic_info);
         ARM(TASK_POWER_INFO,        struct task_power_info);
         ARM(TASK_VM_INFO,           struct task_vm_info);
+        ARM(TASK_VM_INFO_PURGEABLE, struct task_vm_info);
         // ARM(TASK_VM_INFO_REV0,      struct task_vm_info_rev0);
         ARM(TASK_TRACE_MEMORY_INFO, struct task_trace_memory_info);
         ARM(TASK_WAIT_STATE_INFO,   struct task_wait_state_info);
@@ -105,6 +110,7 @@ int task_info_value_for_flavor(char *name) {
     ARM(MACH_TASK_BASIC_INFO);
     ARM(TASK_POWER_INFO);
     ARM(TASK_VM_INFO);
+    ARM(TASK_VM_INFO_PURGEABLE);
     // ARM(TASK_VM_INFO_REV0);
     ARM(TASK_TRACE_MEMORY_INFO);
     ARM(TASK_WAIT_STATE_INFO);
