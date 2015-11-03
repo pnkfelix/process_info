@@ -488,7 +488,7 @@ macro_rules! for_each_flavor {
 
 macro_rules! new_impl {
     ($id:ident) => {
-        impl $id { fn new() -> Self { <Self as Flavor>::new() } }
+        impl $id { pub fn new() -> Self { <Self as Flavor>::new() } }
     }
 }
 
