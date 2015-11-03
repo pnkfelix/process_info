@@ -202,6 +202,12 @@ pub struct TaskVmInfo {
 
 #[repr(C)]
 #[repr(packed)]
+pub struct TaskVmInfoPurgeable {
+    pub info: TaskVmInfo,
+}
+
+#[repr(C)]
+#[repr(packed)]
 pub struct TaskTraceMemoryInfo {
     /// address of start of trace memory buffer
     pub user_memory_address: uint64_t,
@@ -363,6 +369,11 @@ impl Flavor for TaskVmInfo {
     fn c_name() -> &'static str { "TASK_VM_INFO\0" }
 }
 
+impl Flavor for TaskVmInfoPurgeable {
+    fn variant() -> FlavorVariant { FlavorVariant::TaskVmInfoPurgeable }
+    fn c_name() -> &'static str { "TASK_VM_INFO_PURGEABLE\0" }
+}
+
 impl Flavor for TaskTraceMemoryInfo {
     fn variant() -> FlavorVariant { FlavorVariant::TaskTraceMemoryInfo }
     fn c_name() -> &'static str { "TASK_TRACE_MEMORY_INFO\0" }
@@ -443,7 +454,19 @@ macro_rules! for_each_flavor {
         $id!(TaskBasicInfo32);
         $id!(TaskBasicInfo64);
         $id!(TaskEventsInfo);
+        $id!(TaskThreadTimesInfo);
+        $id!(TaskAbsolutetimeInfo);
+        $id!(TaskKernelmemoryInfo);
+        $id!(TaskAffinityTagInfo);
+        $id!(TaskDyldInfo);
         $id!(MachTaskBasicInfo);
+        $id!(TaskPowerInfo);
+        $id!(TaskVmInfo);
+        $id!(TaskVmInfoPurgeable);
+        $id!(TaskTraceMemoryInfo);
+        $id!(TaskWaitStateInfo);
+        $id!(TaskPowerInfoV2);
+        $id!(TaskFlagsInfo);
     }
 }
 
@@ -461,11 +484,14 @@ fn check_sizes() {
 
 #[cfg(test)]
 fn check_value<F:Flavor>() {
-    let val = unsafe {
+    let r_val = F::variant() as c_int;
+    let c_val = unsafe {
         task_info_value_for_flavor(F::c_name().as_ptr() as *const c_char)
     };
-    assert!(val >= 0);
-    assert!(F::variant() as c_int == val);
+    assert!(c_val >= 0, "Flavor {} val: {} lookup negative {}",
+            F::c_name(), r_val, c_val);
+    assert!(r_val == c_val, "Flavor {} val: {} != C {}",
+            F::c_name(), r_val, c_val);
 }
 
 #[cfg(test)]
